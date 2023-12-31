@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('avatar')->nullable();
             $table->text('body')->nullable();
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->enum("status",["active","unactive"]);
             $table->timestamps();
