@@ -12,8 +12,24 @@ class CategoryCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user_id"=>$item->user_id,
+                    "title"=>$item->title,
+
+
+                ];
+            })
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

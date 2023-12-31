@@ -14,6 +14,30 @@ class EpisodeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id"=>$this->id,
+            "user_id"=>$this->user_id,
+            "course"=>$this->course,
+            "title"=>$this->title,
+            "abstract"=>$this->abstract,
+            "body"=>$this->body,
+            "type"=>$this->type,
+            "slug"=>$this->slug,
+            "videoUrl"=>$this->videoUrl,
+            "tags"=>$this->tags,
+            "viewCount"=>$this->viewCount,
+            "commentCount"=>$this->commentCount,
+            "downloadCount"=>$this->downloadCount,
+            "number"=>$this->number,
+            "time"=>$this->time,
+            "time_published"=>$this->time_published,
+            "status"=>$this->status,
+
+
+        ];
+    }
+    public function with(Request $request)
+    {
+        return ["status"=>200];
     }
 }

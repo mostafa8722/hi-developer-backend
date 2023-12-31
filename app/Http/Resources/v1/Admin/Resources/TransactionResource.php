@@ -14,6 +14,20 @@ class TransactionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id"=>$this->id,
+            "user"=>$this->user,
+            "course"=>$this->course,
+            "payment"=>$this->payment,
+            "price"=>$this->price,
+            "discount"=>$this->discount,
+            "body"=>$this->body,
+            "transaction_code"=>$this->transaction_code,
+
+        ];
+    }
+    public function with(Request $request)
+    {
+        return ["status"=>200];
     }
 }

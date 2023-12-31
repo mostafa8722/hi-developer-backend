@@ -14,6 +14,15 @@ class NotificationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id"=>$this->id,
+            "user"=>$this->user,
+            "body"=>$this->body,
+            "seen"=>$this->seen,
+        ];
+    }
+    public function with(Request $request)
+    {
+        return ["status"=>200];
     }
 }

@@ -12,8 +12,36 @@ class CourseCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user_id"=>$item->user_id,
+                    "category_id"=>$item->category_id,
+                    "title"=>$item->title,
+                    "abstract"=>$item->abstract,
+                    "body"=>$item->body,
+                    "type"=>$item->type,
+                    "slug"=>$item->slug,
+                    "images"=>$item->images,
+                    "tags"=>$item->tags,
+                    "viewCount"=>$item->viewCount,
+                    "commentCount"=>$item->commentCount,
+                    "time"=>$item->time,
+                    "status"=>$item->status,
+
+
+                ];
+            })
+
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

@@ -12,8 +12,39 @@ class EpisodeCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user_id"=>$item->user_id,
+                    "course"=>$item->course,
+                    "title"=>$item->title,
+                    "abstract"=>$item->abstract,
+                    "body"=>$item->body,
+                    "type"=>$item->type,
+                    "slug"=>$item->slug,
+                    "videoUrl"=>$item->videoUrl,
+                    "tags"=>$item->tags,
+                    "viewCount"=>$item->viewCount,
+                    "commentCount"=>$item->commentCount,
+                    "downloadCount"=>$item->downloadCount,
+                    "number"=>$item->number,
+                    "time"=>$item->time,
+                    "time_published"=>$item->time_published,
+                    "status"=>$item->status,
+
+                ];
+
+            })
+
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

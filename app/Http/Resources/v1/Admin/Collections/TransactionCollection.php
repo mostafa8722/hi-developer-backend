@@ -12,8 +12,30 @@ class TransactionCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user"=>$item->user,
+                    "course"=>$item->course,
+                    "payment"=>$item->payment,
+                    "price"=>$item->price,
+                    "discount"=>$item->discount,
+                    "body"=>$item->body,
+                    "transaction_code"=>$item->transaction_code,
+
+                ];
+
+            })
+
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

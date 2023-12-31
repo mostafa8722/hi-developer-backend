@@ -16,7 +16,6 @@ class Comment extends Model
         "article_id",
         "comment",
         "status",
-
     ];
 
 

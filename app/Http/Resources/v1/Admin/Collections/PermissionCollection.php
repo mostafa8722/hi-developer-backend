@@ -12,8 +12,27 @@ class PermissionCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "title"=>$item->title,
+                    "en_title"=>$item->en_title,
+                    "body"=>$item->body,
+                    "section"=>$item->section,
+
+
+                ];
+            })
+
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

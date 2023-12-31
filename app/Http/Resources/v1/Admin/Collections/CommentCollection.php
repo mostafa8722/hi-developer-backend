@@ -12,8 +12,29 @@ class CommentCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user_id"=>$item->user_id,
+                    "parent_id"=>$item->parent_id,
+                    "course_id"=>$item->course_id,
+                    "article_id"=>$item->article_id,
+                    "episode_id"=>$item->episode_id,
+                    "comment"=>$item->comment,
+                    "status"=>$item->status,
+
+                ];
+            })
+
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

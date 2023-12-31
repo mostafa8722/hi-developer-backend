@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\v1\Admin\CategoryController as AdminCategory;
 use App\Http\Controllers\Api\v1\Admin\CommentController as AdminComment;
 use App\Http\Controllers\Api\v1\Admin\ContactController as AdminContact;
 use App\Http\Controllers\Api\v1\Admin\LanguageController as AdminLanguage;
-use App\Http\Controllers\Api\v1\Admin\BannerController as AdminBanner;
+use App\Http\Controllers\Api\v1\Admin\CourseController as AdminCourse;
 use App\Http\Controllers\Api\v1\Admin\ColorController as AdminColor;
 use App\Http\Controllers\Api\v1\Admin\NotificationController as AdminNotification;
 use App\Http\Controllers\Api\v1\Admin\OrderController as AdminOrder;
@@ -64,31 +64,11 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("banners")->controller(AdminBanner::class)->group(function (){
-        $table = "banners";
-        $row = "banner";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
 
 
     Route::prefix("categories")->controller(AdminCategory::class)->group(function (){
         $table = "categories";
         $row = "category";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
-    Route::prefix("colors")->controller(AdminColor::class)->group(function (){
-        $table = "colors";
-        $row = "color";
         Route::get('/', 'index')->name("$table.index");
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
@@ -108,18 +88,9 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("contacts")->controller(AdminContact::class)->group(function (){
-        $table = "contacts";
-        $row = "contact";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
-
-    Route::prefix("languages")->controller(AdminLanguage::class)->group(function (){
-        $table = "languages";
-        $row = "language";
+    Route::prefix("courses")->controller(AdminCourse::class)->group(function (){
+        $table = "courses";
+        $row = "course";
         Route::get('/', 'index')->name("$table.index");
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
@@ -127,6 +98,30 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::put('/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
+
+    Route::prefix("episodes")->controller(AdminEpisode::class)->group(function (){
+        $table = "episodes";
+        $row = "episode";
+        Route::get('/', 'index')->name("$table.index");
+        Route::get('/create', 'create')->name("$table.create");
+        Route::post('', 'store')->name("$table.store");
+        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
+    });
+
+
+//
+//    Route::prefix("contacts")->controller(AdminContact::class)->group(function (){
+//        $table = "contacts";
+//        $row = "contact";
+//        Route::get('/', 'index')->name("$table.index");
+//        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+//        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+//        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
+//    });
+
+
 
     Route::prefix("notifications")->controller(AdminNotification::class)->group(function (){
         $table = "notifications";
@@ -137,28 +132,9 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("orders")->controller(AdminOrder::class)->group(function (){
-        $table = "orders";
-        $row = "order";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
 
 
-    Route::prefix("pages")->controller(AdminPage::class)->group(function (){
-        $table = "pages";
-        $row = "page";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
+
 
     Route::prefix("permissions")->controller(AdminPermission::class)->group(function (){
         $table = "permissions";
@@ -171,27 +147,6 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("products")->controller(AdminProduct::class)->group(function (){
-        $table = "products";
-        $row = "product";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
-
-    Route::prefix("productFeatures")->controller(AdminProductFeature::class)->group(function (){
-        $table = "productFeatures";
-        $row = "productFeature";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
 
     Route::prefix("roles")->controller(AdminRole::class)->group(function (){
         $table = "roles";
@@ -250,16 +205,6 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("userAddresses")->controller(AdminUserAddress::class)->group(function (){
-        $table = "userAddresses";
-        $row = "userAddress";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
 
 
     Route::prefix("users")->controller(AdminUser::class)->group(function (){
