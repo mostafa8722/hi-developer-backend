@@ -13,6 +13,24 @@ return new class extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->string("type",10)->nullable();;
+            $table->string("title");
+            $table->string("slug")->nullable();
+            $table->text("abstract")->nullable();;
+            $table->text("body")->nullable();;
+            $table->string("videoUrl")->nullable();
+            $table->string("tags")->nullable();
+            $table->boolean("free")->default(false);
+            $table->string("time",15)->default("00:00:00");
+            $table->string("time_published",15)->default("00:00:00");
+            $table->integer("number")->nullable();;
+            $table->integer("viewCount")->default(0);
+            $table->integer("commentCount")->default(0);
+            $table->integer("downloadCount")->default(0);
+            $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");
             $table->timestamps();
         });
     }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_episodes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('episode_id')->references('id')->on('episodes')->onDelete('cascade');
+            $table->string("time_seen",15)->default("00:00:00");
             $table->timestamps();
         });
     }
