@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\Admin\ArticleController as AdminArticle;
 use App\Http\Controllers\Api\v1\Admin\CategoryController as AdminCategory;
 use App\Http\Controllers\Api\v1\Admin\CommentController as AdminComment;
-use App\Http\Controllers\Api\v1\Admin\ContactController as AdminContact;
-use App\Http\Controllers\Api\v1\Admin\LanguageController as AdminLanguage;
+
 use App\Http\Controllers\Api\v1\Admin\CourseController as AdminCourse;
-use App\Http\Controllers\Api\v1\Admin\ColorController as AdminColor;
+
 use App\Http\Controllers\Api\v1\Admin\NotificationController as AdminNotification;
-use App\Http\Controllers\Api\v1\Admin\OrderController as AdminOrder;
-use App\Http\Controllers\Api\v1\Admin\PageController as AdminPage;
-use App\Http\Controllers\Api\v1\Admin\ProductController as AdminProduct;
-use App\Http\Controllers\Api\v1\Admin\ProductFeatureController as AdminProductFeature;
+
 use App\Http\Controllers\Api\v1\Admin\PermissionController as AdminPermission;
 use App\Http\Controllers\Api\v1\Admin\RoleController as AdminRole;
-use App\Http\Controllers\Api\v1\Admin\SellController as AdminSell;
-use App\Http\Controllers\Api\v1\Admin\SizeController as AdminSize;
+
 use App\Http\Controllers\Api\v1\Admin\TagController as AdminTag;
 use App\Http\Controllers\Api\v1\Admin\TransactionController as AdminTransaction;
-use App\Http\Controllers\Api\v1\Admin\UserAddressController as AdminUserAddress;
+
 use App\Http\Controllers\Api\v1\Admin\UserController as AdminUser;
+use App\Http\Controllers\Api\v1\Admin\AuthController as AuthController;
 
 /*
 |----------------------RoleController----------------------------------------------------
@@ -218,6 +214,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-
+    Route::post('/register', [AuthController::class,'register']);
+    Route::post('/login', [AuthController::class,'login']);
 
 });
