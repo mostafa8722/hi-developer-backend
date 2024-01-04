@@ -20,7 +20,7 @@ class CourseCollection extends ResourceCollection
                 return [
                     "id"=>$item->id,
                     "user_id"=>$item->user_id,
-                    "category_id"=>$item->category_id,
+                    "category"=>$item->category,
                     "title"=>$item->title,
                     "abstract"=>$item->abstract,
                     "body"=>$item->body,
@@ -28,6 +28,7 @@ class CourseCollection extends ResourceCollection
                     "slug"=>$item->slug,
                     "images"=>$item->images,
                     "tags"=>$item->tags,
+                    "price"=>$item->price,
                     "viewCount"=>$item->viewCount,
                     "commentCount"=>$item->commentCount,
                     "time"=>$item->time,

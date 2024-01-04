@@ -24,6 +24,7 @@ class CourseResource extends JsonResource
             "type"=>$this->type,
             "slug"=>$this->slug,
             "images"=>$this->images,
+            "price"=>$this->price,
             "tags"=>$this->tags,
             "viewCount"=>$this->viewCount,
             "commentCount"=>$this->commentCount,

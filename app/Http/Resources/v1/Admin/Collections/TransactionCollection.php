@@ -25,6 +25,7 @@ class TransactionCollection extends ResourceCollection
                     "price"=>$item->price,
                     "discount"=>$item->discount,
                     "body"=>$item->body,
+                    "date"=>$item->created_at,
                     "transaction_code"=>$item->transaction_code,
 
                 ];

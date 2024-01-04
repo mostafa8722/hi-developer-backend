@@ -33,6 +33,7 @@ class EpisodeCollection extends ResourceCollection
                     "downloadCount"=>$item->downloadCount,
                     "number"=>$item->number,
                     "time"=>$item->time,
+                    "free"=>$item->free,
                     "time_published"=>$item->time_published,
                     "status"=>$item->status,
 

@@ -30,6 +30,7 @@ class EpisodeResource extends JsonResource
             "downloadCount"=>$this->downloadCount,
             "number"=>$this->number,
             "time"=>$this->time,
+            "free"=>$this->free,
             "time_published"=>$this->time_published,
             "status"=>$this->status,
 

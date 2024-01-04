@@ -50,7 +50,7 @@ class CommentController extends Controller
 
 
 
-    public function update(Request $request, Comment $comment)
+    public function store(Resequest $request, Comment $comment)
     {
 
         if ($this->checkCommentValidation($request)) {
@@ -59,6 +59,25 @@ class CommentController extends Controller
                 "status" => 422
             ], 422);
         }
+        $user = User::whereApi_token($request->bearerToken())->first();
+        Comment::create([
+            "user_id"=>$user->id,
+            "parent_id" => $comment->id,
+            "article_id" => $comment->article_id,
+            "course_id" => $comment->course_id,
+            "episode_id" => $request->episode_id,
+            "comment" => $request->comment,
+            "status" => $request->status,
+
+
+
+        ]);
+
+        return new CommentResource($comment);
+    }
+    public function update(Request $request, Comment $comment)
+    {
+
 
         $comment->update(["status" => $request->status,]);
 
@@ -78,12 +97,9 @@ class CommentController extends Controller
     {
 
         $message = "";
-        if (!isset($request->title))
-            $message = "عنوان نمی تواند خالی باشد";
-        else if (strlen($request->title) < 3)
-            $message = "عنوان باید حداقل شامل 3 حرف باشد";
-        else if (strlen($request->title) > 200)
-            $message = "عنوان حداکثر شامل 200 حرف می باشد";
+        if (!isset($request->comment))
+            $message = "نظر نمی تواند خالی باشد";
+
 
 
         return $message;

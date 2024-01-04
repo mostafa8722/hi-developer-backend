@@ -22,6 +22,7 @@ class TransactionResource extends JsonResource
             "price"=>$this->price,
             "discount"=>$this->discount,
             "body"=>$this->body,
+            "date"=>$this->created_at,
             "transaction_code"=>$this->transaction_code,
 
         ];

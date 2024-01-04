@@ -60,8 +60,9 @@ class CourseController extends AdminController
             "status"=>$request->status,
             "images"=>$src,
             "abstract"=>$request->abstract,
-            "tags"=>$request->tags,
             "type"=>$request->type,
+            "tags"=>$request->tags,
+            "price"=>$request->price,
         ]);
 
         return  response([
@@ -95,6 +96,7 @@ class CourseController extends AdminController
             "abstract"=>$request->abstract,
             "tags"=>$request->tags,
             "type"=>$request->type,
+            "price"=>$request->price,
         ]);
 
         return new CourseResource($course);

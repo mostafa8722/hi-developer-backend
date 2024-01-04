@@ -44,7 +44,7 @@ class EpisodeController extends AdminController
                 "status" =>422
             ],422);
         }
-
+        $free = $request->free=="free"?true :false;
         $user = User::whereApi_token($request->bearerToken())->first();
         $episode=   Episode::create([
             "user_id"=>$user->id,
@@ -55,6 +55,7 @@ class EpisodeController extends AdminController
             "abstract"=>$request->abstract,
             "tags"=>$request->tags,
             "type"=>$request->type,
+            "free"=>$free,
             "videoUrl"=>$request->videoUrl,
             "time"=>$request->time,
             "time_published"=>$request->time_published,
@@ -78,7 +79,7 @@ class EpisodeController extends AdminController
                 "status" =>422
             ],422);
         }
-
+        $free = $request->free=="free"?true :false;
         $episode->update([
             "title"=>$request->title,
             "body"=>$request->body,
@@ -87,6 +88,7 @@ class EpisodeController extends AdminController
             "abstract"=>$request->abstract,
             "tags"=>$request->tags,
             "type"=>$request->type,
+            "free"=>$free,
             "videoUrl"=>$request->videoUrl,
             "time"=>$request->time,
             "time_published"=>$request->time_published,

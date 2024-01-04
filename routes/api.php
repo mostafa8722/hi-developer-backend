@@ -78,8 +78,9 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         $row = "comment";
         Route::get('/', 'index')->name("$table.index");
         Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
+
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+        Route::put('/create/{'.$row.'}', 'store')->name("$table.store");
         Route::put('/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });

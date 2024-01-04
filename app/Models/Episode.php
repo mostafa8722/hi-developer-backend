@@ -18,6 +18,7 @@ class Episode extends Model
         "body",
         "videoUrl",
         "tags",
+        "free",
         "time",
         "time_published",
         "number",
