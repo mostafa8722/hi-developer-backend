@@ -30,7 +30,7 @@ class ArticleCollection extends ResourceCollection
                     "commentCount"=>$item->commentCount,
                     "category"=>$item->category,
                     "status"=>$item->status,
-                    "images"=>$item->image,
+                    "images"=>$item->images,
                     "tags"=>$item->tags,
 
 

@@ -44,9 +44,10 @@ class ArticleController extends AdminController
                 "status" =>422
             ],422);
         }
+
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        if(isset($request->images)){
+            $image = $request->images;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"articles",time().$ext);
@@ -76,14 +77,15 @@ class ArticleController extends AdminController
                 "status" =>422
             ],422);
         }
+
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        if(isset($request->images)){
+            $image = $request->images;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"articles",time().$ext);
         }else{
-            $src = $article->image??$src;
+            $src = json_decode($request->orginImage, true);
         }
         $article->update([
             "title"=>$request->title,
@@ -97,7 +99,7 @@ class ArticleController extends AdminController
 
         return new ArticleResource($article);
     }
-    public  function  delete(Article $article ){
+    public  function  destroy(Article $article ){
         $article->delete();
         return  response([
             "data"=>"article deleted! ",

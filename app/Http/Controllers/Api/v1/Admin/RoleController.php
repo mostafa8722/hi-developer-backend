@@ -67,11 +67,12 @@ class RoleController extends AdminController
             "en_title"=>$request->en_title,
             "body"=>$request->body,
         ]);
+
         $role->permissions()->sync($request->permissions);
 
         return new RoleResource($role);
     }
-    public  function  delete(Role $role ){
+    public  function  destroy(Role $role ){
         $role->delete();
         return  response([
             "data"=>"دسترسی  با موفقیت حذف شد ",

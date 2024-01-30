@@ -24,7 +24,7 @@ class ArticleResource extends JsonResource
             "commentCount"=>$this->commentCount,
             "category_id"=>$this->category_id,
             "status"=>$this->status,
-            "images"=>$this->image,
+            "images"=>$this->images,
             "tags"=>$this->tags,
         ];
     }

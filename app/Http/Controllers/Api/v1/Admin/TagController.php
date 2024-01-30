@@ -67,7 +67,7 @@ class TagController extends AdminController
 
         return new TagResource($tag);
     }
-    public  function  delete(Tag $tag ){
+    public  function  destroy(Tag $tag ){
         $tag->delete();
         return  response([
             "data"=>"دسترسی  با موفقیت حذف شد ",

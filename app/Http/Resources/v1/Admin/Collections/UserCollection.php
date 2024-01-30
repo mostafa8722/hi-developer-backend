@@ -20,11 +20,12 @@ class UserCollection extends ResourceCollection
                 return [
                     "id"=>$item->id,
                     "name"=>$item->name,
+                    "family"=>$item->family,
                     "mobile"=>$item->mobile,
                     "username"=>$item->username,
                     "email"=>$item->email,
                     "status"=>$item->status,
-                    "avatar"=>$item->avatar,
+                    "avatar"=>$item->avatar?baseUrl().$item->avatar:null,
                     "body"=>$item->body,
 
                 ];

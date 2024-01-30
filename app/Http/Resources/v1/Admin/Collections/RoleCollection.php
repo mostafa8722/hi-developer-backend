@@ -22,6 +22,7 @@ class RoleCollection extends ResourceCollection
                     "title"=>$item->title,
                     "en_title"=>$item->en_title,
                     "body"=>$item->body,
+                    "permissions"=>$item->permissions
 
                 ];
             })

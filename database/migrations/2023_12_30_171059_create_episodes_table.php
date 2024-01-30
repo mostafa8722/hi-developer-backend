@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("slug")->nullable();
             $table->text("abstract")->nullable();;
             $table->text("body")->nullable();;
-            $table->string("videoUrl")->nullable();
+            $table->text("videoUrl")->nullable();
             $table->string("tags")->nullable();
             $table->boolean("free")->default(false);
             $table->string("time",15)->default("00:00:00");
@@ -29,11 +29,16 @@ return new class extends Migration
             $table->integer("number")->nullable();;
             $table->integer("viewCount")->default(0);
             $table->integer("commentCount")->default(0);
+            $table->integer("likeCount")->default(0);
             $table->integer("downloadCount")->default(0);
             $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");
             $table->timestamps();
         });
+
+
+
     }
+
 
     /**
      * Reverse the migrations.

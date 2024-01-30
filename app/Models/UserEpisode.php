@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserEpisode extends Model
 {
     use HasFactory;
-    protected $fillable = ["time_seen","user_id","episode"];
+    protected $fillable = ["time_seen","user_id","episode_id"];
     public function user(){
         return $this->belongsTo(User::class);
     }

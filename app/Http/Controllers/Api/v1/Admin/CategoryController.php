@@ -73,7 +73,7 @@ class CategoryController extends Controller
 
         return new CategoryResource($category);
     }
-    public  function  delete(Category $category ){
+    public  function  destroy(Category $category ){
         $category->delete();
         return  response([
             "data"=>"category deleted!",
@@ -85,7 +85,7 @@ class CategoryController extends Controller
         $message = "";
         if(!isset($request->title)  )
             $message = "عنوان نمی تواند خالی باشد";
-        else if(strlen($request->title)<3  )
+        else if(strlen($request->title)<2  )
             $message = "عنوان باید حداقل شامل 3 حرف باشد";
         else if(strlen($request->title)>200  )
             $message = "عنوان حداکثر شامل 200 حرف می باشد";

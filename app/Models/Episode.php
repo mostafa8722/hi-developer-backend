@@ -24,9 +24,9 @@ class Episode extends Model
         "number",
         "viewCount",
         "commentCount",
+        "likeCount",
         "downloadCount",
         "status"
-
     ];
     protected $casts = [
 

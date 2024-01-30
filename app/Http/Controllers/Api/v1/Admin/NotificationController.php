@@ -56,7 +56,7 @@ class NotificationController extends Controller
         return new NotificationResource($notification);
     }
 
-    public function delete(Notification $notification)
+    public function destroy(Notification $notification)
     {
         $notification->delete();
         return response([

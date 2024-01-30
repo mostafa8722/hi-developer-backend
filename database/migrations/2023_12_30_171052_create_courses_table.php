@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("tags")->nullable();
             $table->integer("price")->default(0);
             $table->integer("viewCount")->default(0);
+            $table->integer("likeCount")->default(0);
             $table->integer("commentCount")->default(0);
             $table->string("time")->default("00:00:00");
             $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");

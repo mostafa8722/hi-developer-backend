@@ -16,6 +16,7 @@ class UserController extends AdminController
     public function index(Request $request){
 
 
+
         $users = new User();
         if(isset($request->name))
             $users = $users->where("name","LIKE","%".$request->name."%");
@@ -53,17 +54,26 @@ class UserController extends AdminController
             ],422);
         }
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        $user = User::whereEmail($request->email)->first();
+        if($user)
+            return  response([
+                "data"=>"email has aleady existed",
+                "status" =>422
+            ],422);
+
+        if(isset($request->avatar)){
+            $image = $request->avatar;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
-            $src = $this->uploadImages($image,"users",time().$ext);
+            $src = $this->uploadFile($image,"users",time().$ext);
         }
 
         User::create([
 
             "name"=>$request->name,
+            "family"=>$request->family,
             "username"=>$request->username,
+            "mobile"=>$request->mobile,
             "email"=>$request->email,
             "status"=>$request->status,
             "avatar"=>$src,
@@ -81,31 +91,33 @@ class UserController extends AdminController
         if($this->checkUserValidation($request)){
             return  response([
                 "data"=>$this->checkUserValidation($request),
-                "status" =>422
+                "status" =>$request->avatar
             ],422);
         }
+
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        if(isset($request->avatar)){
+            $image = $request->avatar;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
-            $src = $this->uploadImages($image,"users",time().$ext);
+            $src = $this->uploadFile($image,"users",time().$ext);
         }else{
-            $src = $user->image??$src;
+            $src = $user->avatar??$src;
         }
         $user->update([
-            "name"=>$request->name,
             "username"=>$request->username,
-            "email"=>$request->email,
+            "family"=>$request->family,
+             "email"=>$request->email,
             "status"=>$request->status,
+            "mobile"=>$request->mobile,
             "avatar"=>$src,
             "body"=>$request->body,
-            "password"=>Hash::make(trim($request->password)),
+
         ]);
 
         return new UserResource($user);
     }
-    public  function  delete(User $user ){
+    public  function  destroy(User $user ){
         $user->delete();
         return  response([
             "data"=>"user deleted! ",
@@ -115,13 +127,16 @@ class UserController extends AdminController
     public  function checkUserValidation(Request $request){
 
         $message = "";
-        if(!isset($request->title)  )
-            $message = "عنوان نمی تواند خالی باشد";
-        else if(strlen($request->title)<3  )
-            $message = "عنوان باید حداقل شامل 3 حرف باشد";
-        else if(strlen($request->title)>200  )
-            $message = "عنوان حداکثر شامل 200 حرف می باشد";
-
+        if(!isset($request->name)  )
+            $message = "نام نمی تواند خالی باشد";
+        else if(strlen($request->name)<3  )
+            $message = "نام باید حداقل شامل 3 حرف باشد";
+        else if(strlen($request->name)>200  )
+            $message = "نام حداکثر شامل 200 حرف می باشد";
+        else if(!isset($request->email)  )
+            $message = "ایمیل نمی تواند خالی باشد";
+        else  if(!$this->validEmail($request->email)  )
+            $message = "ایمیل وارد شده صحیح نمی باشد";
 
         return $message;
     }

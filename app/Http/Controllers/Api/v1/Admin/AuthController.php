@@ -41,7 +41,7 @@ class AuthController extends MainController
         $user= User::create([
             "name"=>$request->name,
             "email"=>$request->email,
-            "password"=>$request->password,
+            "password"=>Hash::make(trim($request->password)),
             "api_token"=> Str::random(60),
         ]);
         return  response([
@@ -58,6 +58,7 @@ class AuthController extends MainController
     }
     public  function login(Request $request){
 
+
         if($this->checkLoginValidation($request)){
             return  response([
                 "data"=>$this->checkLoginValidation($request),
@@ -71,8 +72,8 @@ class AuthController extends MainController
         if (!isset($user)) {
             return  response([
                 "data"=>" ایمیل وارد شده وجود ندارد  ",
-                "status" =>204
-            ],204);
+                "status" =>404
+            ],404);
         }
 
         if (!Hash::check(trim($request->password), $user->password)) {

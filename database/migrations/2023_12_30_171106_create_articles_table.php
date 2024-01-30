@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text("images")->nullable();
             $table->string("tags")->nullable();
             $table->integer("viewCount")->default(0);
+            $table->integer("likeCount")->default(0);
             $table->integer("commentCount")->default(0);
             $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");
 

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Intervention\Image\Image;
+use Intervention\Image\Facades\Image;
 
 
 class AdminController extends Controller
@@ -41,6 +40,7 @@ class AdminController extends Controller
         $file = $file->move(public_path($path),$filename);
 
         $sizes = ["100","200","300"];
+
         $url["images"] = $this->resize($file->getRealPath(),$sizes,$path,$filename);
         $url["thumb"] = $url["images"][$sizes[0]];
 

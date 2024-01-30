@@ -8,17 +8,22 @@ use App\Http\Controllers\Api\v1\Admin\CategoryController as AdminCategory;
 use App\Http\Controllers\Api\v1\Admin\CommentController as AdminComment;
 
 use App\Http\Controllers\Api\v1\Admin\CourseController as AdminCourse;
+use App\Http\Controllers\Api\v1\Admin\EpisodeController as AdminEpisode;
 
 use App\Http\Controllers\Api\v1\Admin\NotificationController as AdminNotification;
 
+use App\Http\Controllers\Api\v1\Admin\PageController as AdminPage;
 use App\Http\Controllers\Api\v1\Admin\PermissionController as AdminPermission;
 use App\Http\Controllers\Api\v1\Admin\RoleController as AdminRole;
 
 use App\Http\Controllers\Api\v1\Admin\TagController as AdminTag;
+use App\Http\Controllers\Api\v1\Admin\TestimonialController as AdminTestimonial;
 use App\Http\Controllers\Api\v1\Admin\TransactionController as AdminTransaction;
 
 use App\Http\Controllers\Api\v1\Admin\UserController as AdminUser;
 use App\Http\Controllers\Api\v1\Admin\AuthController as AuthController;
+use App\Http\Controllers\Api\v1\Home\HomeController as HomeController;
+use App\Http\Controllers\Api\v1\Home\PanelController as PanelUser;
 
 /*
 |----------------------RoleController----------------------------------------------------
@@ -39,16 +44,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
 
 
-    Route::prefix("users")->controller(AdminUser::class)->group(function (){
-        $table = "users";
-        $row = "user";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
+
     Route::prefix("articles")->controller(AdminArticle::class)->group(function (){
         $table = "articles";
         $row = "article";
@@ -69,7 +65,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -81,7 +77,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
 
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
         Route::put('/create/{'.$row.'}', 'store')->name("$table.store");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -92,7 +88,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -103,7 +99,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -125,12 +121,23 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         $row = "notification";
         Route::get('/', 'index')->name("$table.index");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
 
 
+
+    Route::prefix("pages")->controller(AdminPage::class)->group(function (){
+        $table = "pages";
+        $row = "page";
+        Route::get('/', 'index')->name("$table.index");
+        Route::get('/create', 'create')->name("$table.create");
+        Route::post('', 'store')->name("$table.store");
+        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
+        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
+    });
 
 
     Route::prefix("permissions")->controller(AdminPermission::class)->group(function (){
@@ -140,7 +147,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -152,31 +159,13 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::prefix("sells")->controller(AdminSell::class)->group(function (){
-        $table = "sells";
-        $row = "sell";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
 
-    Route::prefix("sizes")->controller(AdminSize::class)->group(function (){
-        $table = "sizes";
-        $row = "size";
-        Route::get('/', 'index')->name("$table.index");
-        Route::get('/create', 'create')->name("$table.create");
-        Route::post('', 'store')->name("$table.store");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
-        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
+
+
 
 
 
@@ -187,10 +176,20 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
+    Route::prefix("testimonials")->controller(AdminTestimonial::class)->group(function (){
+        $table = "testimonials";
+        $row = "testimonial";
+        Route::get('/', 'index')->name("$table.index");
+        Route::get('/create', 'create')->name("$table.create");
+        Route::post('', 'store')->name("$table.store");
+        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
+        Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
+    });
     Route::prefix("transactions")->controller(AdminTransaction::class)->group(function (){
         $table = "transactions";
         $row = "transaction";
@@ -198,7 +197,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::get('/create', 'create')->name("$table.create");
         Route::post('', 'store')->name("$table.store");
         Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/{'.$row.'}', 'update')->name("$table.update");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
         Route::delete('/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
@@ -215,7 +214,34 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
     });
 
-    Route::post('/register', [AuthController::class,'register']);
-    Route::post('/login', [AuthController::class,'login']);
+
 
 });
+
+Route::group(["prefix"=>"v1/user","middleware"=>"user"],function(){
+
+    Route::prefix("users")->controller(PanelUser::class)->group(function (){
+
+        $table = "users";
+        $row = "user";
+        Route::get('/', 'index')->name("$table.index");
+        Route::get('/courses', 'courses')->name("$table.courses");
+        Route::get('/transactions', 'transactions')->name("$table.transactions");
+        Route::get('/episodes', 'episodes')->name("$table.episodes");
+        Route::get('/notifications', 'notifications')->name("$table.notifications");
+        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
+        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
+      //  Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
+    });
+});
+
+
+Route::post('/v1/register', [AuthController::class,'register']);
+Route::post('/v1/login', [AuthController::class,'login']);
+Route::get('/v1/home', [HomeController::class,'index']);
+Route::get('/v1/articles', [HomeController::class,'articles']);
+Route::get('/v1/article/{article}', [HomeController::class,'article']);
+Route::get('/v1/courses', [HomeController::class,'courses']);
+Route::get('/v1/course/{course}', [HomeController::class,'course']);
+Route::get('/v1/episode/{episode}', [HomeController::class,'episode']);
+Route::get('/v1/page/{page}', [HomeController::class,'customPage']);

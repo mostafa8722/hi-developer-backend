@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable = ["title","body","abstract","category_id","tags","images", "slug","viewCount","commentCount","user_id","status"];
+    protected $fillable = ["title","body","abstract","category_id","tags","images", "slug","viewCount","commentCount","likeCount","user_id","status"];
     protected $casts = [
         "images"=> 'array',
         "tags"=> 'array',
@@ -19,6 +19,9 @@ class Article extends Model
     }
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function tags(){
+        return $this->hasMany(Tag::class);
     }
 
 

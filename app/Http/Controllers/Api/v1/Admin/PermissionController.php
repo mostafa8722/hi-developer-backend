@@ -70,7 +70,7 @@ class PermissionController extends AdminController
 
         return new PermissionResource($permission);
     }
-    public  function  delete(Permission $permission ){
+    public  function  destroy(Permission $permission ){
         $permission->delete();
         return  response([
             "data"=>"دسترسی  با موفقیت حذف شد ",

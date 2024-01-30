@@ -17,11 +17,12 @@ class UserResource extends JsonResource
         return [
             "id"=>$this->id,
             "name"=>$this->name,
+            "family"=>$this->family ,
             "mobile"=>$this->mobile,
             "username"=>$this->username,
             "email"=>$this->email,
             "status"=>$this->status,
-            "avatar"=>$this->avatar,
+            "avatar"=>$this->avatar?baseUrl().$this->avatar:null,
             "body"=>$this->body,
 
         ];

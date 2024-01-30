@@ -63,7 +63,7 @@ class TransactionController extends Controller
         return new TransactionResource($transaction);
     }
 
-    public function delete(Transaction $transaction)
+    public function destroy(Transaction $transaction)
     {
         $transaction->delete();
         return response([

@@ -84,7 +84,7 @@ class CommentController extends Controller
         return new CommentResource($comment);
     }
 
-    public function delete(Comment $comment)
+    public function destroy(Comment $comment)
     {
         $comment->delete();
         return response([

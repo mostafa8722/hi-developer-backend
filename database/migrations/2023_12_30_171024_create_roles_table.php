@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
-            $table->string("title");
+            $table->string("title")->unique();
             $table->string("en_title")->unique();
+            $table->string("section");
             $table->string("body")->nullable();
             $table->timestamps();
         });
@@ -23,21 +24,21 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("en_title")->unique();
-            $table->string("section")->unique();
+
             $table->string("body")->nullable();
             $table->timestamps();
         });
         Schema::create('permission_role', function (Blueprint $table) {
 
-            $table->foreignId("role_id")->references("id")->on("permissions")->onDelete("cascade");
+            $table->foreignId("role_id")->references("id")->on("roles")->onDelete("cascade");
 
-            $table->foreignId("permission_id")->references("id")->on("roles")->onDelete("cascade");
+            $table->foreignId("permission_id")->references("id")->on("permissions")->onDelete("cascade");
             $table->primary(['role_id','permission_id']);
         });
 
         Schema::create('role_user', function (Blueprint $table) {
 
-            $table->foreignId("role_id")->references("id")->on("permissions")->onDelete("cascade");
+            $table->foreignId("role_id")->references("id")->on("roles")->onDelete("cascade");
             $table->foreignId("user_id")->references("id")->on("users")->onDelete("cascade");
 
             $table->primary(['role_id','user_id']);

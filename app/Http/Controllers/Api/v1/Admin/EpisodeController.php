@@ -97,7 +97,7 @@ class EpisodeController extends AdminController
         $this->setCoutrseTime($episode);
         return new EpisodeResource($episode);
     }
-    public  function  delete(Episode $episode ){
+    public  function  destroy(Episode $episode ){
         $episode->delete();
         return  response([
             "data"=>"episode deleted! ",

@@ -45,8 +45,8 @@ class CourseController extends AdminController
             ],422);
         }
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        if(isset($request->images)){
+            $image = $request->images;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"courses",time().$ext);
@@ -79,8 +79,8 @@ class CourseController extends AdminController
             ],422);
         }
         $src = null;
-        if(isset($request->image)){
-            $image = $request->image;
+        if(isset($request->images)){
+            $image = $request->images;
             $ext= $image->getClientOriginalExtension();
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"courses",time().$ext);
@@ -101,7 +101,7 @@ class CourseController extends AdminController
 
         return new CourseResource($course);
     }
-    public  function  delete(Course $course ){
+    public  function  destroy(Course $course ){
         $course->delete();
         return  response([
             "data"=>"course deleted! ",
