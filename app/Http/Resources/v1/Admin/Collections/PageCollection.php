@@ -12,8 +12,30 @@ class PageCollection extends ResourceCollection
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "data"=>$this->collection->map(function($item){
+
+                return [
+                    "id"=>$item->id,
+                    "user_id"=>$item->user_id,
+                    "title"=>$item->title,
+                    "abstract"=>$item->abstract,
+                    "slug"=>$item->slug,
+
+                    "status"=>$item->status,
+                    "images"=>$item->images,
+                    "tags"=>$item->tags,
+
+
+                ];
+            })
+
+        ];
+    }
+    public  function with($request)
+    {
+        return ["status"=>200];
     }
 }

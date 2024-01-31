@@ -12,11 +12,11 @@ use Illuminate\Http\Request;
 class PanelController extends AdminController
 {
     public  function  index(Request $request){
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         return  new UserResource($user);
     }
     public function update(Request $request){
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         if($this->checkUserValidation($request)){
             return  response([
                 "data"=>$this->checkUserValidation($request),
@@ -45,7 +45,7 @@ class PanelController extends AdminController
         return new UserResource($user);
     }
     public  function  transactions(Request $request){
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         $transactions = Transaction::whereUser_id($user->id)->latest()->paginate(15);
         return new TransactionCollection($transactions);
     }

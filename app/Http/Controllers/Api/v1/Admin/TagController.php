@@ -39,7 +39,7 @@ class TagController extends AdminController
                 "status" =>422
             ],422);
         }
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Tag::create([
             "user_id"=>$user->id,
             "title"=>$request->title,

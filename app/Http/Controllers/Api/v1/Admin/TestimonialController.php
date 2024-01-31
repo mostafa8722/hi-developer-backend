@@ -9,7 +9,7 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class TestimonialController extends Controller
+class TestimonialController extends AdminController
 {
     public function index(Request $request){
 
@@ -70,6 +70,7 @@ class TestimonialController extends Controller
             "title"=>$request->title,
             "image"=>$src,
             "body"=>$request->body,
+            "status"=>$request->status,
 
         ]);
 
@@ -101,6 +102,7 @@ class TestimonialController extends Controller
             "title"=>$request->title,
             "image"=>$src,
             "body"=>$request->body,
+            "status"=>$request->status,
 
         ]);
 

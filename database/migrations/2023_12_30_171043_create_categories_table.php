@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("title");
+            $table->string("color")->nullable();
+            $table->text("body")->nullable();
+            $table->string("image")->nullable();
+            $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");
+
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('avatar')->nullable();
             $table->text('body')->nullable();
+            $table->string('role')->default("user");
             $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->enum("status",["active","unactive"]);

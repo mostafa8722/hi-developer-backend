@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("title");
             $table->text("abstract");
             $table->string("slug")->nullable();
-            $table->text("body");
+            $table->longText("body");
             $table->text("images")->nullable();
             $table->string("tags")->nullable();
             $table->integer("viewCount")->default(0);

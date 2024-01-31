@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminUser
+class PanelUser
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class AdminUser
 
 
 
-        $user = User::whereApi_token(trim($request->bearerToken()))->whereRole("admin")->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
 
     if(!$user)
             return  response([

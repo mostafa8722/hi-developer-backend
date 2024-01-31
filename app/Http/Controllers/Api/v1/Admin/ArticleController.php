@@ -52,7 +52,7 @@ class ArticleController extends AdminController
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"articles",time().$ext);
         }
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Article::create([
             "user_id"=>$user->id,
             "title"=>$request->title,

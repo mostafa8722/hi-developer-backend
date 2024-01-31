@@ -29,6 +29,7 @@ class User extends Authenticatable
         'api_token',
         'status',
         'body',
+        'role',
         "email_verified_at",
         "mobile_verified_at",
 

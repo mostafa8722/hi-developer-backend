@@ -59,7 +59,7 @@ class CommentController extends Controller
                 "status" => 422
             ], 422);
         }
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Comment::create([
             "user_id"=>$user->id,
             "parent_id" => $comment->id,

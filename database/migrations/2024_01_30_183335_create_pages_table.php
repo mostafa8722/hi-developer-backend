@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("title")->nullable();
             $table->text("body")->nullable();
             $table->text("abstract")->nullable();
-            $table->string("images")->nullable();
+            $table->text("images")->nullable();
             $table->string("tags")->nullable();
             $table->string("slug")->nullable();
             $table->enum("status",["published","rejected","draft","unpublished"])->default("unpublished");

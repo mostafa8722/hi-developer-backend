@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Admin\Collections\CategoryCollection;
 use App\Http\Resources\v1\Admin\Resources\CategoryResource;
 use App\Models\Category;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CategoryController extends AdminController
 
 {
 
@@ -45,10 +46,30 @@ class CategoryController extends Controller
             ],422);
         }
 
-        $user = User::whereApi_token($request->bearerToken())->first();
+
+        $src = null;
+        $category = Category::whereTitle($request->title)->first();
+        if($category)
+            return  response([
+                "data"=>"title has aleady existed",
+                "status" =>422
+            ],422);
+
+        if(isset($request->image)){
+            $image = $request->image;
+            $ext= $image->getClientOriginalExtension();
+            $ext = ".".strtolower($ext);
+            $src = $this->uploadFile($image,"categories",($request->title).$ext);
+        }
+
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Category::create([
             "user_id"=>$user->id,
+            "color"=>$request->color,
             "title"=>$request->title,
+            "image"=>$src,
+            "body"=>$request->body,
+            "status"=>$request->status,
 
         ]);
 
@@ -66,8 +87,22 @@ class CategoryController extends Controller
             ],422);
         }
 
+
+        $src = null;
+        if(isset($request->image)){
+            $image = $request->image;
+            $ext= $image->getClientOriginalExtension();
+            $ext = ".".strtolower($ext);
+            $src = $this->uploadFile($image,"categories",($request->title).$ext);
+        }else{
+            $src = $category->image??$src;
+        }
         $category->update([
+            "color"=>$request->color,
             "title"=>$request->title,
+            "image"=>$src,
+            "body"=>$request->body,
+            "status"=>$request->status,
 
         ]);
 

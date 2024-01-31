@@ -107,11 +107,12 @@ class UserController extends AdminController
         $user->update([
             "username"=>$request->username,
             "family"=>$request->family,
-             "email"=>$request->email,
+             "name"=>$request->name,
+             "body"=>$request->body,
             "status"=>$request->status,
             "mobile"=>$request->mobile,
             "avatar"=>$src,
-            "body"=>$request->body,
+
 
         ]);
 
@@ -121,6 +122,12 @@ class UserController extends AdminController
         $user->delete();
         return  response([
             "data"=>"user deleted! ",
+            "status" =>200
+        ]);
+    }
+    public  function dashboard(){
+        return  response([
+            "data"=>" ",
             "status" =>200
         ]);
     }

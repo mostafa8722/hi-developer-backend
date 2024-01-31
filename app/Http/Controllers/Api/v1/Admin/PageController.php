@@ -50,7 +50,7 @@ class PageController extends AdminController
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"pages",time().$ext);
         }
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Page::create([
             "user_id"=>$user->id,
             "title"=>$request->title,

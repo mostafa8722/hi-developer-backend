@@ -45,7 +45,7 @@ class EpisodeController extends AdminController
             ],422);
         }
         $free = $request->free=="free"?true :false;
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         $episode=   Episode::create([
             "user_id"=>$user->id,
             "title"=>$request->title,

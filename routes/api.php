@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
-
+    Route::get('/dashboard',[AdminUser::class,"dashboard"] )->name("users.dashboard");
 
 
     Route::prefix("articles")->controller(AdminArticle::class)->group(function (){

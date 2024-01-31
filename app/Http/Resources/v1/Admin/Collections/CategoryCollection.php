@@ -20,7 +20,11 @@ class CategoryCollection extends ResourceCollection
                 return [
                     "id"=>$item->id,
                     "user_id"=>$item->user_id,
+                    "color"=>$item->color,
                     "title"=>$item->title,
+                    "status"=>$item->status,
+                    "image"=>$item->image?baseUrl().$item->image:null,
+                    "body"=>$item->body,
 
 
                 ];

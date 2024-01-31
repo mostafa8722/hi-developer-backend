@@ -51,7 +51,7 @@ class CourseController extends AdminController
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"courses",time().$ext);
         }
-        $user = User::whereApi_token($request->bearerToken())->first();
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
         Course::create([
             "user_id"=>$user->id,
             "title"=>$request->title,

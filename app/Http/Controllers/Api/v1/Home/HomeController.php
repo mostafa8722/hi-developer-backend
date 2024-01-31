@@ -23,6 +23,7 @@ use App\Models\Course;
 use App\Models\Episode;
 use App\Models\Page;
 use App\Models\Testimonial;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -38,12 +39,30 @@ class HomeController extends Controller
     }
 
     public  function  articles(Request $request){
+        $episode = Episode::latest()->first();
+
         $categories = Category::oldest()->get();
+        $course =$episode->course;
+        return $this->getCourseTimes($course->episodes->pluck("time"));;;
+        return $episode->course;;
         $articles = new Article();
          $articles = $articles->whereStatus("published")->orderBy('id', isset($request->orderBy) && strtolower($request->orderBy)==="asc" ?'ASC':'DESC')->paginate(15);
         return   new ArticlesPageResource($categories,$articles);
     }
+    public function getCourseTimes($times){
+        $timeStamp = Carbon::parse("00:00:00");
+        foreach ($times as $t){
+            $time = strtotime(strlen($t) ===5?"00:".$t:$t) ;
+
+            $timeStamp->addSecond($time);
+        }
+        return $timeStamp->format("H:i:s");
+    }
     public  function  article(Article $article,Request $request){
+
+        $ep = Episode::latest()->first();
+
+        return $ep;
         $categories = Category::oldest()->get();
         $articles = new Article();
         $articles = $articles->whereStatus("published")->oldest()->limit(3)->get();
