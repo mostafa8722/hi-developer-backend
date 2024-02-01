@@ -32,41 +32,33 @@ class HomeController extends Controller
 
     public  function  index(Request $request){
         $categories = Category::oldest()->get();
-        $testimonials = Testimonial::whereStatus("published")->latest()->get(6);
-        $courses = Course::whereStatus("published")->latest()->get(6);
-        $articles = Article::whereStatus("published")->latest()->get(7);
+        $testimonials = Testimonial::whereStatus("published")->latest()->get();
+        $courses = Course::whereStatus("published")->latest()->limit(6)->get();
+        $articles = Article::whereStatus("published")->latest()->limit(7)->get();
         return new  HomeResource($articles,$courses,$categories,$testimonials);
     }
 
     public  function  articles(Request $request){
-        $episode = Episode::latest()->first();
 
         $categories = Category::oldest()->get();
-        $course =$episode->course;
-        return $this->getCourseTimes($course->episodes->pluck("time"));;;
-        return $episode->course;;
         $articles = new Article();
          $articles = $articles->whereStatus("published")->orderBy('id', isset($request->orderBy) && strtolower($request->orderBy)==="asc" ?'ASC':'DESC')->paginate(15);
         return   new ArticlesPageResource($categories,$articles);
     }
-    public function getCourseTimes($times){
-        $timeStamp = Carbon::parse("00:00:00");
-        foreach ($times as $t){
-            $time = strtotime(strlen($t) ===5?"00:".$t:$t) ;
 
-            $timeStamp->addSecond($time);
-        }
-        return $timeStamp->format("H:i:s");
-    }
-    public  function  article(Article $article,Request $request){
+    public  function  article( $slug,Request $request){
+        $article = Article::whereSlug($slug)->first();
+        if(!$article)
+            return  response([
+                "data"=>"Not Found",
+                "status" =>404
+            ],404);
 
-        $ep = Episode::latest()->first();
-
-        return $ep;
         $categories = Category::oldest()->get();
         $articles = new Article();
         $articles = $articles->whereStatus("published")->oldest()->limit(3)->get();
-        return  ArticlePageResource::make($article)->articles($articles)->categories($categories);
+        $comments = Comment::whereArticle_id($article->id)->whereParent_id(0)->latest()->paginate(15);
+        return  ArticlePageResource::make($article)->articles($articles)->categories($categories)->comments($comments);
     }
     public  function  courses(Request $request){
         $categories = Category::oldest()->get();
@@ -74,19 +66,39 @@ class HomeController extends Controller
         $courses= $courses->whereStatus("published")->orderBy('id', isset($request->orderBy) && strtolower($request->orderBy)==="asc" ?'ASC':'DESC')->paginate(15);
         return  new CoursesPageResource($categories,$courses);
     }
-    public  function  course(Course $course,Request $request){
+    public  function  course( $slug,Request $request){
+        $course = Course::whereSlug($slug)->first();
+        if(!$course)
+        return  response([
+            "data"=>"Not Found",
+            "status" =>404
+        ],404);
         $categories = Category::oldest()->get();
         $courses = new Course();
-        $courses = $courses->whereStatus("published")->oldest()->get(3);
+        $courses = $courses->whereStatus("published")->limit(3)->oldest()->get();
         $episodes = Episode::whereCourse_id($course->id)->orderBy("number","ASC")->get();
-        return  CoursePageResource::make($course)->courses($courses)->episodes($episodes)->categories($categories);
+        $comments = Comment::whereCourse_id($course->id)->whereParent_id(0)->latest()->paginate(15);
+        return  CoursePageResource::make($course)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments);
     }
-    public  function  episode(Episode $episode,Request $request){
+    public  function  episode($slug,$number){
+        $course = Course::whereSlug($slug)->first();
+        if(!$course)
+            return  response([
+                "data"=>"Not Found",
+                "status" =>404
+            ],404);
+        $episode= Episode::whereCourse_id($course->id)->whereNumber($number)->first();
+        if(!$episode)
+            return  response([
+                "data"=>"Not Found",
+                "status" =>404
+            ],404);
         $categories = Category::oldest()->get();
         $courses = new Course();
-        $courses = $courses->whereStatus("published")->oldest()->get(3);
-        $episodes = Episode::whereCourse_id($episode->id)->orderBy("number","ASC")->get();
-        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories);
+        $courses = $courses->whereStatus("published")->oldest()->limit(3)->get();
+        $episodes = Episode::whereCourse_id($course->id)->orderBy("number","ASC")->get();
+        $comments = Comment::whereEpisode_id($episode->id)->whereParent_id(0)->latest()->paginate(15);
+        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments);;
     }
 
     public  function  customPage(Page $page,Request $request){

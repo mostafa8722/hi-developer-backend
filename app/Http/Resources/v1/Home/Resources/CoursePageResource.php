@@ -4,8 +4,10 @@ namespace App\Http\Resources\v1\Home\Resources;
 
 use App\Http\Resources\v1\Home\Collections\ArticleCollection;
 use App\Http\Resources\v1\Home\Collections\CategoryCollection;
+use App\Http\Resources\v1\Home\Collections\CommentCollection;
 use App\Http\Resources\v1\Home\Collections\CourseCollection;
 use App\Http\Resources\v1\Home\Collections\EpsiodeCollection;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,6 +28,10 @@ class CoursePageResource extends JsonResource
         $this->courses = $value;
         return $this;
     }
+    public function comments($value){
+        $this->comments = $value;
+        return $this;
+    }
     public function toArray($request)
     {
         return [
@@ -33,6 +39,7 @@ class CoursePageResource extends JsonResource
             new CourseCollection($this->courses),
             new  EpsiodeCollection($this->episodes),
             new CategoryCollection($this->categories),
+            new CommentCollection($this->comments),
 
         ];
     }

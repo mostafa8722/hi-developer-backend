@@ -33,4 +33,7 @@ class Course extends Model
     public  function episodes(){
         return $this->hasMany(Episode::class);
     }
+    public  function likes(){
+        return $this->hasMany(Like::class);
+    }
 }

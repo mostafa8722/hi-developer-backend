@@ -12,6 +12,7 @@ class Episode extends Model
         "course_id",
         "user_id",
         "type",
+        "section",
         "title",
         "slug",
         "abstract",
@@ -50,5 +51,8 @@ class Episode extends Model
     }
     public function path(){
         return "courses/{$this->course->id}/episode/{$this->number}";
+    }
+    public  function likes(){
+        return $this->hasMany(Like::class);
     }
 }

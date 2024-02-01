@@ -22,7 +22,7 @@ class TestimonialCollection extends ResourceCollection
             "name"=>$item->name,
             "title"=>$item->title,
             "status"=>$item->status,
-            "image"=>$item->image?baseUrl().$this->image:null,
+            "image"=>$item->image?baseUrl().$item->image:null,
             "body"=>$item->body,
         ];
             })

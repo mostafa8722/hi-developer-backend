@@ -6,7 +6,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryCollection extends ResourceCollection
+class CommentCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -17,15 +17,16 @@ class CategoryCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            "categories"=>$this->collection->map(function($item){
+            "comments"=>$this->collection->map(function($item){
 
-                $count = Course::whereCategory_id($item->id)->get()->count();
+
                 return [
                     "id"=>$item->id,
-                    "title"=>$item->title,
-                    "color"=>$item->color,
-                    "image"=>$item->image?baseUrl().$item->image:null,
-                    "countCourse"=>$count." ".($count>1?"Courses":"Course")
+                    "comment"=>$item->comment,
+                    "user"=>[
+                        "name"=>$item->user->name." ".$item->user->family,
+                        "image"=>baseUrl().$item->user->avatar,
+                    ],
 
 
                 ];

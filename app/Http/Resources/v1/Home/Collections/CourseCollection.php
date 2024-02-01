@@ -15,7 +15,7 @@ class CourseCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            "articles"=>$this->collection->map(function($item){
+            "courses"=>$this->collection->map(function($item){
 
                 return [
                     "id"=>$item->id,
@@ -23,12 +23,14 @@ class CourseCollection extends ResourceCollection
                     "category"=>$item->category,
                     "title"=>$item->title,
                     "abstract"=>$item->abstract,
-                    "body"=>$item->body,
+                    "body"=>$item->abstract,
                     "type"=>$item->type,
-                    "slug"=>$item->slug,
-                    "images"=>$item->images,
+                    "image"=>$item->images["thumb"]?baseUrl().$item->images["thumb"]:null,
+                    "slug"=>preg_replace('/\s+/', '_', trim(strtolower($item->title))),
+
+
                     "tags"=>$item->tags,
-                    "price"=>$item->price,
+                    "price"=>$item->price===0?"free":($item->price."$"),
                     "viewCount"=>$item->viewCount,
                     "commentCount"=>$item->commentCount,
                     "time"=>$item->time,

@@ -63,6 +63,7 @@ class CourseController extends AdminController
             "type"=>$request->type,
             "tags"=>$request->tags,
             "price"=>$request->price,
+            "slug"=>preg_replace('/\s+/', '_', trim(strtolower($request->title)))
         ]);
 
         return  response([
@@ -97,6 +98,7 @@ class CourseController extends AdminController
             "tags"=>$request->tags,
             "type"=>$request->type,
             "price"=>$request->price,
+            "slug"=>preg_replace('/\s+/', '_', trim(strtolower($request->title)))
         ]);
 
         return new CourseResource($course);

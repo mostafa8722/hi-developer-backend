@@ -23,12 +23,16 @@ class ArticleCollection extends ResourceCollection
                     "abstract"=>$item->abstract,
                     "slug"=>$item->slug,
                     "viewCount"=>$item->viewCount,
-                    "commentCount"=>$item->commentCount,
+                    "comment"=>$item->commentCount."comment".($item->commentCount>1?"s":""),
                     "category_id"=>$item->category_id,
                     "category"=>$item->category,
                     "status"=>$item->status,
-                    "images"=>$item->images,
+                    "image"=>$item->images["thumb"]?baseUrl().$item->images["thumb"]:null,
                     "tags"=>$item->tags,
+                    "user"=>[
+                        "name"=>$item->user->name." ".$item->user->family,
+                        "image"=>baseUrl().$item->user->avatar,
+                    ],
                 ];
             })
 

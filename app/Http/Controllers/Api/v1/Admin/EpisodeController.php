@@ -49,6 +49,7 @@ class EpisodeController extends AdminController
         $episode=   Episode::create([
             "user_id"=>$user->id,
             "title"=>$request->title,
+            "section"=>$request->section,
             "body"=>$request->body,
             "course_id"=>$request->course_id,
             "status"=>$request->status,
@@ -81,6 +82,7 @@ class EpisodeController extends AdminController
         }
         $free = $request->free=="free"?true :false;
         $episode->update([
+            "section"=>$request->section,
             "title"=>$request->title,
             "body"=>$request->body,
             "course_id"=>$request->course_id,

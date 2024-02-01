@@ -62,6 +62,7 @@ class ArticleController extends AdminController
             "images"=>$src,
             "abstract"=>$request->abstract,
             "tags"=>$request->tags,
+            "slug"=>preg_replace('/\s+/', '_', trim(strtolower($request->title)))
         ]);
 
         return  response([
@@ -95,6 +96,7 @@ class ArticleController extends AdminController
             "images"=>$src,
             "abstract"=>$request->abstract,
             "tags"=>$request->tags,
+            "slug"=>preg_replace('/\s+/', '_', trim(strtolower($request->title)))
         ]);
 
         return new ArticleResource($article);

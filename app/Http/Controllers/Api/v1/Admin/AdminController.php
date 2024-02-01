@@ -54,7 +54,7 @@ class AdminController extends Controller
 
         foreach ($sizes as $size){
 
-            $images["orginal"]= $imagePath.$filename;
+            $images["original"]= $imagePath.$filename;
 
             $images[$size] = $imagePath."{$size}_".$filename ;
 

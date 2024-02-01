@@ -23,7 +23,8 @@ class EpisodeResource extends JsonResource
             "episode"=>[
                 "id"=>$this->id,
                 "user_id"=>$this->user_id,
-                "course"=>$this->course,
+                "course"=>$this->course->title,
+                "category"=>$this->course->category->title,
                 "title"=>$this->title,
                 "abstract"=>$this->abstract,
                 "body"=>$this->body,
@@ -37,8 +38,11 @@ class EpisodeResource extends JsonResource
                 "number"=>$this->number,
                 "time"=>$this->time,
                 "free"=>$this->free,
+                "likeCount"=>$this->likes->count(),
                 "time_published"=>$this->time_published,
                 "status"=>$this->status,
+                "price"=>$this->course->price===0?"free":($this->course->price)."$",
+
 
 
             ]

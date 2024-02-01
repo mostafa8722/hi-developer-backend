@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string("type",10)->nullable();;
+            $table->string("section");
             $table->string("title");
             $table->string("slug")->nullable();
             $table->text("abstract")->nullable();;
