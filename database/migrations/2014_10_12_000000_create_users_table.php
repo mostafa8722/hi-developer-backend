@@ -25,6 +25,8 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->string('role')->default("user");
             $table->string('api_token')->nullable();
+            $table->string('verifyCode')->nullable();
+            $table->string('resetPassword')->nullable();
             $table->rememberToken();
             $table->enum("status",["active","unactive"]);
             $table->timestamps();

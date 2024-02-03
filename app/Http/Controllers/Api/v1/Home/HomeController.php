@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Api\v1\Home;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\Home\Collection\BlogCollection;
-use App\Http\Resources\v1\Home\Resources\AboutResource;
+
 use App\Http\Resources\v1\Home\Resources\ArticlePageResource;
 use App\Http\Resources\v1\Home\Resources\ArticlesPageResource;
 use App\Http\Resources\v1\Home\Resources\CoursePageResource;
 use App\Http\Resources\v1\Home\Resources\CoursesPageResource;
 use App\Http\Resources\v1\Home\Resources\CustomPageResource;
 use App\Http\Resources\v1\Home\Resources\EpisodePageResource;
-use App\Http\Resources\v1\Home\Resources\HeaderResource;
+
 use App\Http\Resources\v1\Home\Resources\HomeResource;
-use App\Http\Resources\v1\Home\Resources\ProjectResource;
-use App\Http\Resources\v1\Home\Resources\ResumeResource;
+
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Comment;
@@ -22,7 +20,9 @@ use App\Models\Course;
 
 use App\Models\Episode;
 use App\Models\Page;
+use App\Models\Tag;
 use App\Models\Testimonial;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,6 +31,7 @@ class HomeController extends Controller
 
 
     public  function  index(Request $request){
+
         $categories = Category::oldest()->get();
         $testimonials = Testimonial::whereStatus("published")->latest()->get();
         $courses = Course::whereStatus("published")->latest()->limit(6)->get();
@@ -41,8 +42,16 @@ class HomeController extends Controller
     public  function  articles(Request $request){
 
         $categories = Category::oldest()->get();
-        $articles = new Article();
-         $articles = $articles->whereStatus("published")->orderBy('id', isset($request->orderBy) && strtolower($request->orderBy)==="asc" ?'ASC':'DESC')->paginate(15);
+        $articles = Article::join('categories', 'categories.id', '=', 'articles.category_id');
+        if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
+            $articles = $articles ->whereIn("categories.title",($this->MapArray(explode(',', $request->categories))));
+
+
+
+
+        $articles= $articles->where("articles.status","=","published")->orderBy('articles.id', isset($request->sort) && strtolower($request->sort)==="oldest" ?'ASC':'DESC')->paginate(15);
+
+
         return   new ArticlesPageResource($categories,$articles);
     }
 
@@ -61,9 +70,19 @@ class HomeController extends Controller
         return  ArticlePageResource::make($article)->articles($articles)->categories($categories)->comments($comments);
     }
     public  function  courses(Request $request){
+
+        $courses = Course::join('categories', 'categories.id', '=', 'courses.category_id');
+
+        if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
+        $courses = $courses ->whereIn("categories.title",($this->MapArray(explode(',', $request->categories))));
+
+
+        if(isset($request->types) &&  isset(explode(',', $request->types)[0]))
+            $courses = $courses ->whereIn("courses.type",($this->MapArray(explode(',', $request->types))));
+
         $categories = Category::oldest()->get();
-        $courses = new Course();
-        $courses= $courses->whereStatus("published")->orderBy('id', isset($request->orderBy) && strtolower($request->orderBy)==="asc" ?'ASC':'DESC')->paginate(15);
+
+        $courses= $courses->where("courses.status","=","published")->orderBy('courses.id', isset($request->sort) && strtolower($request->sort)==="oldest" ?'ASC':'DESC')->paginate(15);
         return  new CoursesPageResource($categories,$courses);
     }
     public  function  course( $slug,Request $request){
@@ -106,5 +125,13 @@ class HomeController extends Controller
         return  new CustomPageResource($page);
     }
 
-
+    public  function MapArray($arr){
+        $map = [];
+        $i=0;
+        foreach ($arr as $row) {
+            $map[$i] =   $row  ;
+            $i++;
+        }
+        return $map;
+    }
 }

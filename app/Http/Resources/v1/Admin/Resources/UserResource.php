@@ -21,10 +21,11 @@ class UserResource extends JsonResource
             "mobile"=>$this->mobile,
             "body"=>$this->body,
             "username"=>$this->username,
-            "email"=>$this->email,
-            "status"=>$this->status,
-            "avatar"=>$this->avatar?baseUrl().$this->avatar:null,
             "api_token"=>$this->api_token,
+            "email"=>$this->email,
+
+            "avatar"=>$this->avatar?baseUrl().$this->avatar:null,
+
 
         ];
     }

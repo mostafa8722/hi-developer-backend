@@ -99,4 +99,7 @@ class AdminController extends Controller
             $ipaddress = 'UNKNOWN';
         return $ipaddress;
     }
+    public  function validPassword($str) {
+        return (!preg_match("/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/", $str)) ? FALSE : TRUE;
+    }
 }

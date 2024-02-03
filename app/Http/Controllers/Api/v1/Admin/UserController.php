@@ -17,6 +17,7 @@ class UserController extends AdminController
 
 
 
+
         $users = new User();
         if(isset($request->name))
             $users = $users->where("name","LIKE","%".$request->name."%");

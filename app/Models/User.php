@@ -30,6 +30,8 @@ class User extends Authenticatable
         'status',
         'body',
         'role',
+        "verifyCode",
+        "resetPassword",
         "email_verified_at",
         "mobile_verified_at",
 

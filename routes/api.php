@@ -218,9 +218,9 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
 
 });
 
-Route::group(["prefix"=>"v1/user","middleware"=>"user"],function(){
 
-    Route::prefix("users")->controller(PanelUser::class)->group(function (){
+
+    Route:: prefix("v1/user")->controller(PanelUser::class)->group(function (){
 
         $table = "users";
         $row = "user";
@@ -229,18 +229,24 @@ Route::group(["prefix"=>"v1/user","middleware"=>"user"],function(){
         Route::get('/transactions', 'transactions')->name("$table.transactions");
         Route::get('/episodes', 'episodes')->name("$table.episodes");
         Route::get('/notifications', 'notifications')->name("$table.notifications");
-        Route::get('/edit/{'.$row.'}', 'edit')->name("$table.edit");
-        Route::put('/update/{'.$row.'}', 'update')->name("$table.update");
+        Route::get('/edit', 'edit')->name("$table.edit");
+        Route::put('/update', 'update')->name("$table.update");
+        Route::post('/updateImage', 'updateImage')->name("$table.updateImage");
+        Route::put('/updatePassword', 'updatePassword')->name("$table.updatePassword");
       //  Route::delete('/delete/{'.$row.'}', 'destroy')->name("$table.delete");
-    });
+
 });
 
 
 Route::post('/v1/register', [AuthController::class,'register']);
 Route::post('/v1/login', [AuthController::class,'login']);
+Route::post('/v1/verify/code', [AuthController::class,'verifyCode']);
+Route::post('/v1/reset/password', [AuthController::class,'resetPassword']);
+Route::post('/v1/forget/password', [AuthController::class,'forgetPassword']);
+Route::post('/v1/resend/code', [AuthController::class,'resendCode']);
 Route::get('/v1/home', [HomeController::class,'index']);
 Route::get('/v1/articles', [HomeController::class,'articles']);
-Route::get('/v1/article/{slug}', [HomeController::class,'article']);
+Route::get('/v1/articles/{slug}', [HomeController::class,'article']);
 Route::get('/v1/courses', [HomeController::class,'courses']);
 Route::get('/v1/courses/{course}', [HomeController::class,'course']);
 Route::get('/v1/episode/{slug}/{number}', [HomeController::class,'episode']);

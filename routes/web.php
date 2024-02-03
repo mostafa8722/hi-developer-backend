@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return 500;
+//
+//    $user=\App\Models\User::first();
+//    $user->update([
+//        "verifyCode"=>rand(100000,999999)
+//    ]);
 });
+    return Carbon::now();
+    return rand(100000,999999);
