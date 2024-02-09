@@ -19,7 +19,7 @@ class CourseResource extends JsonResource
                 "body"=>$this->body,
                 "type"=>$this->type,
                 "slug"=>$this->slug,
-                "image"=>$this->images?baseUrl().$this->images["images"]["orginal"] :null,
+                "image"=>$this->images?baseUrl().$this->images["images"]["original"] :null,
                 "price"=>$this->price===0?"free":($this->price."$"),
                 "viewCount"=>$this->viewCount,
                 "likeCount"=>$this->likes->count(),

@@ -226,6 +226,10 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
         $row = "user";
         Route::get('/', 'index')->name("$table.index");
         Route::get('/courses', 'courses')->name("$table.courses");
+        Route::get('/likes', 'likes')->name("$table.likes");
+        Route::post('/save/like', 'saveLike')->name("$table.saveLike");
+        Route::post('/save/comment', 'saveComment')->name("$table.saveComment");
+        Route::get('/comments', 'comments')->name("$table.comments");
         Route::get('/transactions', 'transactions')->name("$table.transactions");
         Route::get('/episodes', 'episodes')->name("$table.episodes");
         Route::get('/notifications', 'notifications')->name("$table.notifications");

@@ -20,20 +20,22 @@ class HomeResource extends JsonResource
     protected  $articles;
     protected  $courses;
     protected  $testimonials;
-    public function __construct($articles,$courses,$categories,$testimonials)
+    protected  $user;
+    public function __construct($user,$articles,$courses,$categories,$testimonials)
     {
         $this->categories = $categories;
         $this->courses = $courses;
         $this->articles = $articles;
         $this->testimonials = $testimonials;
+        $this->user = $user;
     }
 
 
     public function toArray($request)
     {
         return [
-            new ArticleCollection($this->articles),
-            new CourseCollection($this->courses),
+             ArticleCollection::make($this->articles)->user($this->user),
+             CourseCollection::make($this->courses)->user($this->user),
             new CategoryCollection($this->categories),
             new TestimonialCollection($this->testimonials),
         ];

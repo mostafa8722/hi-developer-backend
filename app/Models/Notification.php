@@ -12,6 +12,7 @@ class Notification extends Model
         "user_id",
         "body",
         "seen",
+        "status",
     ];
 
 

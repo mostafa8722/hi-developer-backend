@@ -79,6 +79,7 @@ class CourseController extends AdminController
                 "status" =>422
             ],422);
         }
+
         $src = null;
         if(isset($request->images)){
             $image = $request->images;
@@ -86,7 +87,7 @@ class CourseController extends AdminController
             $ext = ".".strtolower($ext);
             $src = $this->uploadImages($image,"courses",time().$ext);
         }else{
-            $src = $course->image??$src;
+            $src = json_decode($request->orginImage, true);
         }
         $course->update([
             "title"=>$request->title,

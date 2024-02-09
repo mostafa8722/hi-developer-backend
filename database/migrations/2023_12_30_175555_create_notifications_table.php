@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string("status")->nullable();
             $table->text("body")->nullable();
             $table->boolean("seen")->default(false);
             $table->timestamps();

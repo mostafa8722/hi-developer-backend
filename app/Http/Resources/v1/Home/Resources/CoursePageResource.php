@@ -32,11 +32,15 @@ class CoursePageResource extends JsonResource
         $this->comments = $value;
         return $this;
     }
+    public function user($value){
+        $this->user = $value;
+        return $this;
+    }
     public function toArray($request)
     {
         return [
             new CourseResource($this),
-            new CourseCollection($this->courses),
+             CourseCollection::make($this->courses)->user($this->user),
             new  EpsiodeCollection($this->episodes),
             new CategoryCollection($this->categories),
             new CommentCollection($this->comments),

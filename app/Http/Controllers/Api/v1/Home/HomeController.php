@@ -31,16 +31,18 @@ class HomeController extends Controller
 
 
     public  function  index(Request $request){
-
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $categories = Category::oldest()->get();
         $testimonials = Testimonial::whereStatus("published")->latest()->get();
         $courses = Course::whereStatus("published")->latest()->limit(6)->get();
         $articles = Article::whereStatus("published")->latest()->limit(7)->get();
-        return new  HomeResource($articles,$courses,$categories,$testimonials);
+        return new  HomeResource($user,$articles,$courses,$categories,$testimonials);
     }
 
     public  function  articles(Request $request){
-
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $categories = Category::oldest()->get();
         $articles = Article::join('categories', 'categories.id', '=', 'articles.category_id');
         if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
@@ -56,6 +58,8 @@ class HomeController extends Controller
     }
 
     public  function  article( $slug,Request $request){
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $article = Article::whereSlug($slug)->first();
         if(!$article)
             return  response([
@@ -70,7 +74,8 @@ class HomeController extends Controller
         return  ArticlePageResource::make($article)->articles($articles)->categories($categories)->comments($comments);
     }
     public  function  courses(Request $request){
-
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $courses = Course::join('categories', 'categories.id', '=', 'courses.category_id');
 
         if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
@@ -86,6 +91,8 @@ class HomeController extends Controller
         return  new CoursesPageResource($categories,$courses);
     }
     public  function  course( $slug,Request $request){
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $course = Course::whereSlug($slug)->first();
         if(!$course)
         return  response([
@@ -97,9 +104,11 @@ class HomeController extends Controller
         $courses = $courses->whereStatus("published")->limit(3)->oldest()->get();
         $episodes = Episode::whereCourse_id($course->id)->orderBy("number","ASC")->get();
         $comments = Comment::whereCourse_id($course->id)->whereParent_id(0)->latest()->paginate(15);
-        return  CoursePageResource::make($course)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments);
+        return  CoursePageResource::make($course)->user($user)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments);
     }
-    public  function  episode($slug,$number){
+    public  function  episode($slug,$number,Request $request){
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         $course = Course::whereSlug($slug)->first();
         if(!$course)
             return  response([
@@ -121,10 +130,10 @@ class HomeController extends Controller
     }
 
     public  function  customPage(Page $page,Request $request){
-
+        $user = User::whereApi_token(trim($request->bearerToken()))->first();
+        $user = $user?$user->id:0;
         return  new CustomPageResource($page);
     }
-
     public  function MapArray($arr){
         $map = [];
         $i=0;
