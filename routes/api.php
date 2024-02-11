@@ -220,7 +220,7 @@ Route::group(["prefix"=>"v1/admin","middleware"=>"admin"],function(){
 
 
 
-    Route:: prefix("v1/user")->controller(PanelUser::class)->group(function (){
+    Route:: prefix("v1/user")->middleware("user")->controller(PanelUser::class)->group(function (){
 
         $table = "users";
         $row = "user";
