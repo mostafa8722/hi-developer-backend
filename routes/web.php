@@ -20,7 +20,11 @@ Route::get('/', function () {
 //    $user->update([
 //        "verifyCode"=>rand(100000,999999)
 //    ]);
-    return \App\Models\User::get();
+    return  response([
+        "data"=>\App\Models\User::get(),
+        "status" =>200
+    ],200);
+
     return Carbon::now();
     return rand(100000,999999);
 });
