@@ -22,6 +22,7 @@ Route::get('/', function () {
 //    ]);
     return  response([
         "data"=>\App\Models\User::get(),
+        "data2"=>\Illuminate\Support\Facades\DB::table('categories')->count(),
         "status" =>200
     ],200);
 
