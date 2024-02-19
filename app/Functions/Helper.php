@@ -1,7 +1,8 @@
 <?php
 
  function baseUrl(){
-     return "https://api.developerend.com";
+
+     return env('BASE_URL', '');
 
 }
 ?>
