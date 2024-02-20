@@ -45,7 +45,7 @@ class HomeController extends Controller
         $user = $user?$user->id:0;
         $categories = Category::oldest()->get();
         $articles = Article::join('categories', 'categories.id', '=', 'articles.category_id');
-        if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
+        if(isset($request->categories) &&  $request->categories!=null &&  isset(explode(',', $request->categories)[0]))
             $articles = $articles ->whereIn("categories.title",($this->MapArray(explode(',', $request->categories))));
 
 
@@ -78,11 +78,11 @@ class HomeController extends Controller
         $user = $user?$user->id:0;
         $courses = Course::join('categories', 'categories.id', '=', 'courses.category_id');
 
-        if(isset($request->categories) &&  isset(explode(',', $request->categories)[0]))
+        if(isset($request->categories) &&  $request->categories!=null && isset(explode(',', $request->categories)[0]))
         $courses = $courses ->whereIn("categories.title",($this->MapArray(explode(',', $request->categories))));
 
 
-        if(isset($request->types) &&  isset(explode(',', $request->types)[0]))
+        if(isset($request->types) && $request->types!=null && isset(explode(',', $request->types)[0]))
             $courses = $courses ->whereIn("courses.type",($this->MapArray(explode(',', $request->types))));
 
         $categories = Category::oldest()->get();

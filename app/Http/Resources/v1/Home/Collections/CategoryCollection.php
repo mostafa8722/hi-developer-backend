@@ -25,7 +25,8 @@ class CategoryCollection extends ResourceCollection
                     "title"=>$item->title,
                     "color"=>$item->color,
                     "image"=>$item->image?baseUrl().$item->image:null,
-                    "countCourse"=>$count." ".($count>1?"Courses":"Course")
+                    "countCourse"=>$count." ".($count>1?"Courses":"Course"),
+                    "slug"=>"/courses?categories=".preg_replace('/\s+/', '_', trim(strtolower($item->title))),
 
 
                 ];
