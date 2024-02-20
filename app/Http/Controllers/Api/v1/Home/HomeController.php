@@ -77,7 +77,7 @@ class HomeController extends Controller
 
         $user = User::whereApi_token(trim($request->bearerToken()))->first();
         $user = $user?$user->id:0;
-        $courses = Course::join('categories', 'categories.id', '=', 'courses.category_id');
+        $courses = Course::join('categories', 'categories.id', '=', 'courses.category_id')->select("courses.*");
 
         if(isset($request->categories) &&  $request->categories!="null" && isset(explode(',', $request->categories)[0]))
         $courses = $courses ->whereIn("categories.title",($this->MapArray(explode(',', $request->categories))));
