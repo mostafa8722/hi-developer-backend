@@ -18,10 +18,12 @@ class ArticlesPageResource extends JsonResource
      */
     protected  $categories;
     protected  $articles;
+    protected  $user;
 
 
-public function __construct($categories,$articles)
+public function __construct($user,$categories,$articles)
 {
+    $this->user = $user;
     $this->categories = $categories;
     $this->articles = $articles;
 }
@@ -29,7 +31,7 @@ public function __construct($categories,$articles)
     public function toArray($request)
     {
         return [
-           new ArticleCollection($this->articles),
+            ArticleCollection::make($this->articles)->user($this->user),
             new CategoryCollection($this->categories),
 
         ];

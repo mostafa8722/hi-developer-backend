@@ -17,16 +17,18 @@ class CoursesPageResource extends JsonResource
      */
     protected  $categories;
     protected  $courses;
-    public function __construct($categories,$courses)
+    protected  $user;
+    public function __construct($user,$categories,$courses)
     {
         $this->categories = $categories;
         $this->courses = $courses;
+        $this->user = $user;
     }
 
     public function toArray($request)
     {
         return [
-            new CourseCollection($this->courses),
+            CourseCollection::make($this->courses)->user($this->user),
             new CategoryCollection($this->categories),
 
         ];

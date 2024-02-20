@@ -54,7 +54,7 @@ class HomeController extends Controller
         $articles= $articles->where("articles.status","=","published")->orderBy('articles.id', isset($request->sort) && strtolower($request->sort)==="oldest" ?'ASC':'DESC')->paginate(15);
 
 
-        return   new ArticlesPageResource($categories,$articles);
+        return   new ArticlesPageResource($user,$categories,$articles);
     }
 
     public  function  article( $slug,Request $request){
@@ -88,7 +88,7 @@ class HomeController extends Controller
         $categories = Category::oldest()->get();
 
         $courses= $courses->where("courses.status","=","published")->orderBy('courses.id', isset($request->sort) && strtolower($request->sort)==="oldest" ?'ASC':'DESC')->paginate(15);
-        return  new CoursesPageResource($categories,$courses);
+        return  new CoursesPageResource($user,$categories,$courses);
     }
     public  function  course( $slug,Request $request){
         $user = User::whereApi_token(trim($request->bearerToken()))->first();
