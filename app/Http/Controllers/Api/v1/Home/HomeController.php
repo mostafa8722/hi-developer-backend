@@ -127,7 +127,7 @@ class HomeController extends Controller
         $courses = $courses->whereStatus("published")->oldest()->limit(3)->get();
         $episodes = Episode::whereCourse_id($course->id)->orderBy("number","ASC")->get();
         $comments = Comment::whereEpisode_id($episode->id)->whereParent_id(0)->latest()->paginate(15);
-        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments);;
+        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments)->user($user);;
     }
 
     public  function  customPage(Page $page,Request $request){
