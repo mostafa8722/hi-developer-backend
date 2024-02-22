@@ -71,7 +71,7 @@ class HomeController extends Controller
         $articles = new Article();
         $articles = $articles->whereStatus("published")->oldest()->limit(3)->get();
         $comments = Comment::whereArticle_id($article->id)->whereParent_id(0)->latest()->paginate(15);
-        return  ArticlePageResource::make($article)->articles($articles)->categories($categories)->comments($comments);
+        return  ArticlePageResource::make($article)->articles($articles)->categories($categories)->comments($comments)->user($user);
     }
     public  function  courses(Request $request){
 
@@ -127,7 +127,7 @@ class HomeController extends Controller
         $courses = $courses->whereStatus("published")->oldest()->limit(3)->get();
         $episodes = Episode::whereCourse_id($course->id)->orderBy("number","ASC")->get();
         $comments = Comment::whereEpisode_id($episode->id)->whereParent_id(0)->latest()->paginate(15);
-        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments)->user($user);;
+        return  EpisodePageResource::make($episode)->courses($courses)->episodes($episodes)->categories($categories)->comments($comments)->user($user);
     }
 
     public  function  customPage(Page $page,Request $request){

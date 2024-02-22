@@ -24,11 +24,15 @@ class ArticlePageResource extends JsonResource
         $this->comments = $value;
         return $this;
     }
+    public function user($value){
+        $this->user = $value;
+        return $this;
+    }
     public function toArray($request)
     {
         return [
             new ArticleResource($this),
-            new ArticleCollection($this->articles),
+             ArticleCollection::make($this->articles)->user($this->user),
             new CategoryCollection($this->categories),
             new CommentCollection($this->comments),
 
